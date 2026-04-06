@@ -1,0 +1,7 @@
+opencv-python>=4.10.0
+# MediaPipe wheels currently available up to 0.10.33 for Python <=3.11 on Windows.
+mediapipe==0.10.33
+pydirectinput>=1.0.4
+numpy>=1.26.0
+pygame>=2.5.2
+sounddevice>=0.5.5
