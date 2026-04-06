@@ -1,6 +1,6 @@
 # Dual Dash
 
-Arcade-style runner with two optional controllers: hand pinch or audio (clap/shout). Built with pygame + MediaPipe; includes custom sounds and icon in `assets/`. Both hand_dash.py and audio_dash.py also work with the real browser version of games like Geometry Dash.
+Arcade-style runner with two optional controllers: hand pinch or audio (clap/shout). Built with pygame + MediaPipe; includes custom sounds and icon in `assets/`. Both hand_dash.py and audio_dash.py also work with the real browser version of games like Geometry Dash. See `videos/` for demo videos.
 
 <img width="897" height="516" alt="image" src="https://github.com/user-attachments/assets/d2e60ebd-7724-4db1-b579-706437e3500b" />
 
