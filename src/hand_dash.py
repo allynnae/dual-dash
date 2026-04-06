@@ -148,6 +148,7 @@ def run(args):
 
     landmarker = mp_hand_landmarker.HandLandmarker.create_from_options(options)
     prev_time = time.time()
+    cv2.namedWindow("HandDash", cv2.WINDOW_AUTOSIZE)
     while True:
         ok, frame = cap.read()
         if not ok:
@@ -189,6 +190,8 @@ def run(args):
         key = cv2.waitKey(1) & 0xFF
         if key in (ord("q"), 27):
             break
+        if cv2.getWindowProperty("HandDash", cv2.WND_PROP_VISIBLE) < 1:
+            break  # window closed via title-bar X
 
     sender.release()
     cap.release()

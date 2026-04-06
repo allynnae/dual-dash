@@ -21,6 +21,7 @@ BG_BOT = (18, 10, 30)
 ACCENT = (120, 200, 255)
 ACCENT2 = (200, 120, 255)  # bright purple for alternate spikes
 NEON = (0, 255, 180)
+CRASH_RED = (255, 120, 120)
 
 WIDTH, HEIGHT = 900, 520
 GROUND_Y = HEIGHT - 80
@@ -485,7 +486,7 @@ def main():
         # Player (rotating cube)
         prect = player.rect()
         cube_surface = pygame.Surface((player.size, player.size), pygame.SRCALPHA)
-        pygame.draw.rect(cube_surface, WHITE if not dead else (255, 120, 120), cube_surface.get_rect(), border_radius=6)
+        pygame.draw.rect(cube_surface, WHITE if not dead else CRASH_RED, cube_surface.get_rect(), border_radius=6)
         pygame.draw.rect(cube_surface, BLACK, cube_surface.get_rect(), width=2, border_radius=6)
         rotated = pygame.transform.rotozoom(cube_surface, player.angle, 1)
         screen.blit(rotated, rotated.get_rect(center=prect.center))
@@ -526,7 +527,7 @@ def main():
         pygame.draw.rect(screen, WHITE, (home_rect.x + 10, home_rect.y + 20, 20, 14), border_radius=2)
 
         if dead:
-            msg = font_big.render("Crashed! Space/Click to restart. Esc to quit.", True, ACCENT2)
+            msg = font_big.render("Crashed! Space/Click to restart. Esc to quit.", True, CRASH_RED)
             screen.blit(msg, (args.width / 2 - msg.get_width() / 2, args.height * 0.55))
         if completed:
             overlay = pygame.Surface((args.width, args.height), pygame.SRCALPHA)

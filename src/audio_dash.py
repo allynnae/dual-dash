@@ -17,7 +17,7 @@ pydirectinput.PAUSE = 0
 def main():
     parser = argparse.ArgumentParser(description="Audio-based jump trigger (clap/shout -> space).")
     parser.add_argument("--device", type=int, default=None, help="Audio input device index (default: system default).")
-    parser.add_argument("--threshold", type=float, default=0.07, help="RMS amplitude to trigger (0–1). Lower = more sensitive.")
+    parser.add_argument("--threshold", type=float, default=0.05, help="RMS amplitude to trigger (0–1). Lower = more sensitive.")
     parser.add_argument("--cooldown", type=float, default=0.15, help="Seconds to wait after a trigger.")
     parser.add_argument("--output", choices=["space", "left_click"], default="space", help="What to send.")
     parser.add_argument("--rate", type=int, default=16000, help="Sample rate.")
