@@ -39,4 +39,5 @@ python src/audio_dash.py
 - `src/gd_clone.py` — Dual Dash game
 - `src/hand_dash.py` — Hand pinch controller
 - `src/audio_dash.py` — Audio clap/shout controller
-- `assets/` — icon + sounds
+- `assets/` — Icons + sounds
+- `videos/` — Demo videos
