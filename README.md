@@ -2,6 +2,8 @@
 
 Arcade-style runner with two optional controllers: hand pinch or audio (clap/shout). Built with pygame + MediaPipe; includes custom sounds and icon in `assets/`.
 
+<img width="897" height="516" alt="image" src="https://github.com/user-attachments/assets/d2e60ebd-7724-4db1-b579-706437e3500b" />
+
 ## Install (Windows)
 ```powershell
 python -m venv .venv
