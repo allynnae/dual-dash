@@ -32,7 +32,7 @@ python src/hand_dash.py                     # add "--camera #" if --list-cams co
 ```powershell
 python src/audio_dash.py 
 ```
-- `--threshold` defaults to 0.07. Lower `--threshold` = more sensitive; try 0.05 if it misses. Raise it (e.g., 0.10) if you get false triggers.
+- `--threshold` defaults to 0.05. Lower `--threshold` = more sensitive; try 0.05 if it misses. Raise it (e.g., 0.10) if you get false triggers.
 
 ## File map
 - `src/gd_clone.py` — Dual Dash game
