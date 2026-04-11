@@ -46,7 +46,9 @@ export const useJumpSubscription = (fn: JumpListener) => {
 export const useLevelSubscription = (fn: LevelListener) => {
   useEffect(() => {
     levelSubscribers.add(fn);
-    return () => levelSubscribers.delete(fn);
+    return () => {
+      levelSubscribers.delete(fn);
+    };
   }, [fn]);
 };
 
@@ -159,43 +161,45 @@ const useMotion = (active: boolean) => {
           return streamRef.current;
         };
         const attachToPreview = async () => {
-        video = previewTargets.video || localVideoRef.current || document.createElement("video");
-        if (!localVideoRef.current) {
-          localVideoRef.current = video;
-          video.style.position = "absolute";
-          video.style.opacity = "0";
-        }
-        video.autoplay = true;
-        video.playsInline = true;
-        video.muted = true;
-        const stream = await ensureStream();
-        video.srcObject = stream;
-        await new Promise<void>((resolve) => {
-          if (video.readyState >= 1 && video.videoWidth > 0) return resolve();
-          const handler = () => {
-            video.removeEventListener("loadedmetadata", handler);
-            resolve();
-          };
-          video.addEventListener("loadedmetadata", handler);
-          setTimeout(resolve, 400);
-        });
+          const vid = previewTargets.video ?? localVideoRef.current ?? document.createElement("video");
+          video = vid;
+          if (!localVideoRef.current) {
+            localVideoRef.current = vid;
+            vid.style.position = "absolute";
+            vid.style.opacity = "0";
+          }
+          vid.autoplay = true;
+          vid.playsInline = true;
+          vid.muted = true;
+          const stream = await ensureStream();
+          vid.srcObject = stream;
+          await new Promise<void>((resolve) => {
+            if (vid.readyState >= 1 && vid.videoWidth > 0) return resolve();
+            const handler = () => {
+              vid.removeEventListener("loadedmetadata", handler);
+              resolve();
+            };
+            vid.addEventListener("loadedmetadata", handler);
+            setTimeout(resolve, 400);
+          });
           try {
-            await video.play();
+            await vid.play();
           } catch (e: any) {
-          if (e?.name === "AbortError") {
+            if (e?.name === "AbortError") {
               console.warn("Video play aborted (benign), continuing.");
             } else {
               throw e;
             }
           }
           // If a preview target exists and wasn't the video we used, also pipe the stream there.
-          if (previewTargets.video && previewTargets.video !== video) {
-            previewTargets.video.srcObject = stream;
-            previewTargets.video.autoplay = true;
-            previewTargets.video.playsInline = true;
-            previewTargets.video.muted = true;
+          if (previewTargets.video && previewTargets.video !== vid) {
+            const pv = previewTargets.video;
+            pv.srcObject = stream;
+            pv.autoplay = true;
+            pv.playsInline = true;
+            pv.muted = true;
             try {
-              await previewTargets.video.play();
+              await pv.play();
             } catch (e) {
               console.warn("Preview video play failed (non-fatal)", e);
             }
