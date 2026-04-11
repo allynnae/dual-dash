@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useSettings, InputMode } from "../state";
-import { FilesetResolver, HandLandmarker, GestureRecognizerResult } from "@mediapipe/tasks-vision";
+import { FilesetResolver, HandLandmarker, HandLandmarkerResult } from "@mediapipe/tasks-vision";
+import modelUrl from "/mediapipe/hand_landmarker.task?url";
 
 type JumpListener = () => void;
 type LevelListener = (level: number) => void;
@@ -144,7 +145,7 @@ const useMotion = (active: boolean) => {
           numHands: 1,
           runningMode: "VIDEO",
           baseOptions: {
-            modelAssetPath: "/mediapipe/hand_landmarker.task"
+            modelAssetPath: modelUrl
           }
         });
         landmarkerRef.current = landmarker;
@@ -205,22 +206,27 @@ const useMotion = (active: boolean) => {
 
         let last = performance.now();
         const loop = async () => {
-          if (!mounted || !video) return;
-          const now = performance.now();
-          if (!video || video.readyState < 2 || video.videoWidth === 0 || video.videoHeight === 0) {
+          if (!mounted) return;
+          const currentVideo = video;
+          if (!currentVideo) {
             raf = requestAnimationFrame(loop);
             return;
           }
-          video.width = video.videoWidth;
-          video.height = video.videoHeight;
-          const res: GestureRecognizerResult | null = landmarker.detectForVideo(video, now);
+          const now = performance.now();
+          if (currentVideo.readyState < 2 || currentVideo.videoWidth === 0 || currentVideo.videoHeight === 0) {
+            raf = requestAnimationFrame(loop);
+            return;
+          }
+          currentVideo.width = currentVideo.videoWidth;
+          currentVideo.height = currentVideo.videoHeight;
+          const res: HandLandmarkerResult | null = landmarker.detectForVideo(currentVideo, now) as any;
           const landmarks = res?.landmarks?.[0];
           const canvas = previewTargets.canvas;
           const ctx = canvas?.getContext("2d");
-          if (canvas && ctx && video.videoWidth > 0 && video.videoHeight > 0) {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          if (canvas && ctx && currentVideo.videoWidth > 0 && currentVideo.videoHeight > 0) {
+            canvas.width = currentVideo.videoWidth;
+            canvas.height = currentVideo.videoHeight;
+            ctx.drawImage(currentVideo, 0, 0, canvas.width, canvas.height);
             if (landmarks) {
               ctx.lineWidth = 2;
               ctx.strokeStyle = "#1af8ff";

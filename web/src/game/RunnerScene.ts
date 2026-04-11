@@ -77,10 +77,11 @@ export class RunnerScene extends Phaser.Scene {
   }
 
   create() {
-    this.sound.pauseOnBlur = false;
-    this.sound.pauseOnHide = false;
-    this.sound.mute = false;
-    this.sound.volume = 1;
+    const sm = this.sound as Phaser.Sound.WebAudioSoundManager;
+    if ("pauseOnBlur" in sm) (sm as any).pauseOnBlur = false;
+    if ("pauseOnHide" in sm) (sm as any).pauseOnHide = false;
+    if ("mute" in sm) (sm as any).mute = false;
+    if ("volume" in sm) (sm as any).volume = 1;
 
     this.goal = this.conf.speed * this.conf.levelSeconds;
     const sky = this.add.rectangle(500000, this.HEIGHT / 2, 1000000, this.HEIGHT, 0x0c1026).setDepth(-20);
@@ -109,7 +110,9 @@ export class RunnerScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12, 0, 120);
 
     try {
-      this.sound.unlock();
+      if (this.sound instanceof Phaser.Sound.WebAudioSoundManager) {
+        this.sound.unlock();
+      }
     } catch (e) {
       // ignore
     }
@@ -342,11 +345,12 @@ export class RunnerScene extends Phaser.Scene {
   }
 
   ensureBgm(retriesRemaining = 3) {
-    const ctx = this.sound.context;
+    const sm = this.sound as Phaser.Sound.BaseSoundManager & { context?: AudioContext };
+    const ctx = sm.context;
     if (ctx?.state === "suspended") {
       ctx.resume().catch(() => {});
     }
-    const existing = this.sound.get("bgm");
+    const existing = sm.get("bgm");
     if (!existing && !this.loggedMissingBgm && import.meta.env.DEV) {
       console.warn("BGM not loaded yet; will retry shortly");
       this.loggedMissingBgm = true;
@@ -371,13 +375,17 @@ export class RunnerScene extends Phaser.Scene {
   attachVisibilityHandlers() {
     this.visibilityHandler = () => {
       if (document.visibilityState === "visible") {
-        this.sound.context?.resume().catch(() => {});
-        this.bgm?.resume();
+        if (this.sound instanceof Phaser.Sound.WebAudioSoundManager) {
+          this.sound.context?.resume().catch(() => {});
+          this.bgm?.resume();
+        }
       }
     };
     this.pageShowHandler = () => {
-      this.sound.context?.resume().catch(() => {});
-      this.bgm?.resume();
+      if (this.sound instanceof Phaser.Sound.WebAudioSoundManager) {
+        this.sound.context?.resume().catch(() => {});
+        this.bgm?.resume();
+      }
     };
     document.addEventListener("visibilitychange", this.visibilityHandler);
     window.addEventListener("pageshow", this.pageShowHandler);

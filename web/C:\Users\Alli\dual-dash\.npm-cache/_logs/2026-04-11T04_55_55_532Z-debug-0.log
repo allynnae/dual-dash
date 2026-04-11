@@ -7,8 +7,8 @@
 6 silly config load:file:/usr/etc/npmrc
 7 verbose title npm install
 8 verbose argv "install"
-9 verbose logfile logs-max:10 dir:/mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_18_52_609Z-
-10 verbose logfile /mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_18_52_609Z-debug-0.log
+9 verbose logfile logs-max:10 dir:/mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_55_55_532Z-
+10 verbose logfile /mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_55_55_532Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
 13 silly logfile done cleaning log files
@@ -354,7 +354,7 @@
 64 silly reify mark deleted [
 64 silly reify   '/mnt/c/Users/Alli/dual-dash/web/node_modules/@rollup/rollup-android-arm-eabi'
 64 silly reify ]
-65 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 207ms
+65 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 266ms
 66 silly audit report {
 66 silly audit report   vite: [
 66 silly audit report     {
@@ -369,10 +369,10 @@
 66 silly audit report   ]
 66 silly audit report }
 67 silly packumentCache corgi:https://registry.npmjs.org/vite cache-miss
-68 http fetch GET 200 https://registry.npmjs.org/vite 72ms (cache revalidated)
+68 http fetch GET 200 https://registry.npmjs.org/vite 79ms (cache revalidated)
 69 silly packumentCache corgi:https://registry.npmjs.org/vite set size:2229030 disposed:false
 70 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react cache-miss
-71 http fetch GET 200 https://registry.npmjs.org/@vitejs%2fplugin-react 65ms (cache revalidated)
+71 http fetch GET 200 https://registry.npmjs.org/@vitejs%2fplugin-react 76ms (cache revalidated)
 72 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react set size:112470 disposed:false
 73 silly ADD
 74 silly ADD

@@ -1,6 +1,9 @@
 import Phaser from "phaser";
 import { RunnerScene } from "./RunnerScene";
 import { Difficulty } from "../state";
+import bgmUrl from "/assets/arcade-background.mp3";
+import startUrl from "/assets/game-start.mp3";
+import overUrl from "/assets/game-over.mp3";
 
 export type GameHandles = {
   setDifficulty: (d: Difficulty) => void;
@@ -19,19 +22,20 @@ export const createGame = (
   onComplete: () => void
 ): GameHandles => {
   const audioKeys = {
-    bgm: "/assets/arcade-background.mp3",
-    start: "/assets/game-start.mp3",
-    over: "/assets/game-over.mp3"
+    bgm: bgmUrl,
+    start: startUrl,
+    over: overUrl
   };
   let audioUnlockCleanup: (() => void) | null = null;
 
   const installAudioUnlock = (game: Phaser.Game, tryPlayBgm: () => void) => {
     if (audioUnlockCleanup) return;
     const unlock = async () => {
-      const ctx = game.sound?.context;
+      const sm = game.sound as Phaser.Sound.WebAudioSoundManager;
+      const ctx = sm?.context;
       if (!ctx) return;
       try {
-        if (game.sound.locked) game.sound.unlock();
+        if (sm.locked) sm.unlock();
         if (ctx.state === "suspended") await ctx.resume();
         const buffer = ctx.createBuffer(1, 1, 22050);
         const source = ctx.createBufferSource();
@@ -47,7 +51,8 @@ export const createGame = (
       }
     };
     const resumeIfVisible = () => {
-      const ctx = game.sound?.context;
+      const sm = game.sound as Phaser.Sound.WebAudioSoundManager;
+      const ctx = sm?.context;
       if (!ctx) return;
       if (document.visibilityState === "visible") {
         ctx.resume().catch(() => {});
@@ -74,7 +79,7 @@ export const createGame = (
       super("preload");
     }
     preload() {
-      const g = this.make.graphics({ x: 0, y: 0, add: false });
+      const g = this.make.graphics({ x: 0, y: 0 });
       g.fillStyle(0xffffff, 1);
       g.fillCircle(32, 32, 32);
       g.generateTexture("glow", 64, 64);
@@ -115,10 +120,11 @@ export const createGame = (
   const runner = new RunnerScene({ difficulty, onProgress, onAttempt, onComplete });
 
   const tryPlayBgm = () => {
-    const s = runner.sound as Phaser.Sound.WebAudioSoundManager | undefined;
-    const ctx = s?.context;
+    const s = runner.sound;
+    if (!(s instanceof Phaser.Sound.WebAudioSoundManager)) return;
+    const ctx = s.context;
     if (ctx?.state === "suspended") ctx.resume().catch(() => {});
-    const existing = s?.get("bgm") as Phaser.Sound.WebAudioSound | undefined;
+    const existing = s.get("bgm") as Phaser.Sound.WebAudioSound | undefined;
     if (existing) {
       if (!existing.isPlaying) existing.play();
       else existing.resume();
