@@ -1,0 +1,13 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.9.4
+2 info using node@v22.21.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/mnt/c/Users/Alli/dual-dash/web/.npmrc
+5 silly config load:file:/home/allynnae/.npmrc
+6 silly config load:file:/usr/etc/npmrc
+7 verbose title npm run dev --host 0.0.0.0 --port 5173
+8 verbose argv "run" "dev" "--" "--host" "0.0.0.0" "--port" "5173"
+9 verbose logfile logs-max:10 dir:/mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_07_30_996Z-
+10 verbose logfile /mnt/c/Users/Alli/dual-dash/web/C:\Users\Alli\dual-dash\.npm-cache/_logs/2026-04-11T04_07_30_996Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files

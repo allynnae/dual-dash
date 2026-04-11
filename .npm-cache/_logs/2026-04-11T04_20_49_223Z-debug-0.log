@@ -1,0 +1,18 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.20.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\Alli\dual-dash\web\.npmrc
+5 silly config load:file:C:\Users\Alli\.npmrc
+6 silly config load:file:C:\Users\Alli\dual-dash\web\etc\npmrc
+7 verbose title npm install vercel
+8 verbose argv "install" "--save-dev" "vercel" "--prefix" "web"
+9 verbose logfile logs-max:10 dir:C:\Users\Alli\dual-dash\.npm-cache\_logs\2026-04-11T04_20_49_223Z-
+10 verbose logfile C:\Users\Alli\dual-dash\.npm-cache\_logs\2026-04-11T04_20_49_223Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest vercel@*
+15 silly packumentCache full:https://registry.npmjs.org/vercel cache-miss
+16 http fetch GET https://registry.npmjs.org/npm attempt 1 failed with EACCES
+17 http fetch GET https://registry.npmjs.org/vercel attempt 1 failed with EACCES

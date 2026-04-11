@@ -9,6 +9,13 @@ __pycache__/
 # MediaPipe model cache
 models/
 
+# Node / Vite build artifacts
+node_modules/
+web/node_modules/
+web/dist/
+web/.npm-cache/
+web/.vercel/
+
 # OS / IDE
 .DS_Store
 Thumbs.db
