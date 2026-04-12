@@ -2,6 +2,8 @@
 
 Arcade runner with Motion (hand pinch) and Audio (clap/shout) controllers. Built with React + Phaser + MediaPipe Tasks and served as a static site. Current source of truth is in `web/`.
 
+<img width="1066" height="651" alt="image" src="https://github.com/user-attachments/assets/5045215f-c9a8-4b70-882e-a5e21eb591f5" />
+
 ## Quickstart (dev)
 ```powershell
 cd web
