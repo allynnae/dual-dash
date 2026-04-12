@@ -135,6 +135,12 @@ export const GameCanvas = ({ mode, difficulty, onHome }: Props) => {
         </div>
         {mode === "audio" && (
           <div className="flex items-center gap-3 text-xs text-slate-200 pointer-events-auto pl-1">
+            <div className="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 border border-white/15 text-slate-200">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 9v6h4l5 4V5l-5 4H5z" />
+                <path d="M15.5 8.5a4.5 4.5 0 0 1 0 7" />
+              </svg>
+            </div>
             <div className="w-40 h-2 rounded-full bg-white/10 overflow-hidden border border-white/10">
               <div
                 className="h-full bg-gradient-to-r from-cyan-400 to-pink-400 transition-[width] duration-75"

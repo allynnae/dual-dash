@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { GameCanvas } from "./components/GameCanvas";
 import { Difficulty, InputMode, useSettings, useStats } from "./state";
 import ParticleBackground from "./components/ParticleBackground";
 import GameTitle from "./components/GameTitle";
+
+const globalBgmUrl = `${import.meta.env.BASE_URL}assets/arcade-background.mp3`;
+const buttonClickUrl = `${import.meta.env.BASE_URL}assets/button-click.mp3`;
 
 const modes: { id: InputMode; label: string; desc: string; requires: string }[] = [
   { id: "motion", label: "Motion Tracking", desc: "Pinch (thumb + index)", requires: "Requires camera" },
@@ -21,6 +24,62 @@ export default function App() {
   const [stage, setStage] = useState<"landing" | "select" | "playing">("landing");
   const [permissionState, setPermissionState] = useState<"idle" | "requesting" | "error">("idle");
   const [permissionMessage, setPermissionMessage] = useState("");
+  const globalBgmRef = useRef<HTMLAudioElement | null>(null);
+  const buttonClickRef = useRef<HTMLAudioElement | null>(null);
+
+  // Play background music globally (landing, select, playing). Falls back to first user gesture if autoplay blocks.
+  useEffect(() => {
+    const audio = new Audio(globalBgmUrl);
+    audio.loop = true;
+    audio.volume = 0.6;
+    globalBgmRef.current = audio;
+
+    const tryPlay = () => audio.play().catch(() => {});
+    tryPlay();
+
+    const unlock = () => {
+      tryPlay();
+    };
+
+    window.addEventListener("pointerdown", unlock, { once: true, passive: true });
+    window.addEventListener("keydown", unlock, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("keydown", unlock);
+      audio.pause();
+      audio.src = "";
+      globalBgmRef.current = null;
+    };
+  }, []);
+
+  // Play click sfx on any button click
+  useEffect(() => {
+    const clickAudio = new Audio(buttonClickUrl);
+    clickAudio.volume = 0.45;
+    buttonClickRef.current = clickAudio;
+
+    const handler = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (!target.closest("button")) return;
+      try {
+        clickAudio.currentTime = 0;
+        void clickAudio.play();
+      } catch {
+        /* ignore */
+      }
+    };
+
+    window.addEventListener("click", handler, true);
+
+    return () => {
+      window.removeEventListener("click", handler, true);
+      clickAudio.pause();
+      clickAudio.src = "";
+      buttonClickRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const handler = (e: Event) => {
