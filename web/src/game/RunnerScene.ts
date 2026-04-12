@@ -244,13 +244,17 @@ export class RunnerScene extends Phaser.Scene {
       ob.setOrigin(0.5, 1);
       ob.setStrokeStyle(2, 0x101018);
 
+      // Slightly shrink the spike hitbox to better match the visual sprite (reduces false positives near the right edge)
+      const hitWidth = width * 0.85;
+      const hitHeight = height * 0.92;
+      const halfHit = hitWidth / 2;
       const tri = new Phaser.Geom.Triangle(
-        x - width / 2,
+        x - halfHit,
         this.GROUND_Y,
-        x + width / 2,
+        x + halfHit,
         this.GROUND_Y,
         x,
-        this.GROUND_Y - height
+        this.GROUND_Y - hitHeight
       );
 
       ob.setData("triangle", tri);
